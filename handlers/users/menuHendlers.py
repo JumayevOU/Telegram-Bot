@@ -1,13 +1,22 @@
 import logging 
 from aiogram.types import Message, CallbackQuery
 from loader import dp
-from keyboards.inline.Social_networks import back_button, social_network_Keyboard, main_menu, back_button_bio, resume_Keyboard
+from keyboards.inline.Social_networks import back_button, social_network_Keyboard, main_menu, back_button_bio, resume_Keyboard,back_button_resume, back_button_network
 from keyboards.inline.startMenu import startMenu_Keyboard
 from aiogram.types import InputFile
 
 
 
 
+
+@dp.callback_query_handler(text='menu')
+async def select_category(call: CallbackQuery):
+    await call.message.delete()
+    await call.message.answer(f"Kerakli menuni tanlang ⤵️", reply_markup=startMenu_Keyboard)
+
+
+
+#BIO
 @dp.callback_query_handler(text='bio')
 async def select_category(call: CallbackQuery):
   
@@ -22,7 +31,7 @@ async def select_category(call: CallbackQuery):
     await call.message.delete()
 
 
-
+#RESUME
 @dp.callback_query_handler(text='resume')
 async def select_category(call: CallbackQuery):
     await call.message.delete()
@@ -32,57 +41,25 @@ async def select_category(call: CallbackQuery):
 @dp.callback_query_handler(text='download')
 async def select_category(call: CallbackQuery):
     with open("/home/acer/Downloads/Telegram Desktop/Otajon-Bozorboev-FlowCV-Resume-20240815.pdf", 'rb') as pdf_file:
-        await call.message.answer_document(pdf_file, caption="Bu Otajon Bozorboyevning resumesi! ")
+        await call.message.answer_document(pdf_file, caption="Bu Otajon Bozorboyevning resumesi!", reply_markup=back_button_resume)
     await call.message.delete()
 
 
-
+#SOCIAL NETWORKS
 @dp.callback_query_handler(text='social_networks')
 async def select_category(call: CallbackQuery):
-    await call.message.delete()
-    await call.message.answer(f"Sahifani tanlang ⤵️", reply_markup=social_network_Keyboard)
-
-
-
-
-@dp.callback_query_handler(text='github')
-async def select_category(call: CallbackQuery):
-    await call.message.answer("""<b>GitHub:</b>"""f"https://github.com/otajonbozorboyev", reply_markup=back_button)
+    photo_file = InputFile(path_or_bytesio="/home/acer/Downloads/Telegram Desktop/photo_2024-08-16_23-04-35.jpg")
+    await call.message.reply_photo(photo_file, reply_markup=social_network_Keyboard)
     await call.message.delete()
 
 
 
-@dp.callback_query_handler(text='linkedin')
-async def select_category(call: CallbackQuery):
-    await call.message.answer("""<b>LinkedIn:</b>"""f"https://www.linkedin.com/in/otajonbozorboyev", reply_markup=back_button)
-    await call.message.delete()    
-
-
-@dp.callback_query_handler(text='leetcode')
-async def select_category(call: CallbackQuery):
-    await call.message.answer("""<b>Leetcode:</b>"""f"https://leetcode.com/u/otajonbozorboyev571", reply_markup=back_button)
-    await call.message.delete()    
-
-
-
-@dp.callback_query_handler(text='telegram')
-async def select_category(call: CallbackQuery):
-    await call.message.answer("""<b>Telegram kanal:</b>"""f"https://t.me/otajonbozorboyev", reply_markup=back_button)
-    await call.message.delete()      
-
-
-
-
+#BACK
 @dp.callback_query_handler(text='back')
 async def select_category(call: CallbackQuery):
     await call.message.delete()
     await call.message.answer(f"Sahifani tanlang ⤵️", reply_markup=startMenu_Keyboard)
 
-
-@dp.callback_query_handler(text='back_network')
-async def select_category(call: CallbackQuery):
-    await call.message.delete()
-    await call.message.answer(f"Sahifani tanlang ⤵️", reply_markup=social_network_Keyboard)
 
 
 
@@ -90,3 +67,10 @@ async def select_category(call: CallbackQuery):
 async def select_category(call: CallbackQuery):
     await call.message.delete()
     await call.message.answer(f"Sahifani tanlang ⤵️", reply_markup=startMenu_Keyboard)
+
+
+
+@dp.callback_query_handler(text='back_resume')
+async def select_category(call: CallbackQuery):
+    await call.message.delete()
+    await call.message.answer(f"Bo'limni tanlang ⤵️", reply_markup=resume_Keyboard)
