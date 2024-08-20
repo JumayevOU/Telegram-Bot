@@ -26,32 +26,23 @@ async def checker(call: types.CallbackQuery):
     for channel in CHANNELS:
         status = await subscription.check(user_id=call.from_user.id,
                                           channel=channel)
+        print(status)
         channel = await bot.get_chat(channel)
         if status:
             initial_message = await call.message.answer("🎉 Obuna bo’ldingiz. Endi botni bemalol ishlatishingiz mumkun.")
             await call.message.delete()
-            
             await asyncio.sleep(1)
-            
             await initial_message.delete()
-            print("keldi")
             photo_file = InputFile(path_or_bytesio="/home/acer/Downloads/Telegram Desktop/photo_2024-04-07_18-13-25.jpg")
-            print("yo'lda")
             await call.message.bot.send_photo(chat_id=call.message.chat.id, photo=photo_file,caption=f"Salom {call.message.from_user.full_name} botimizga xush kelibsiz!\nBu <b>Otajon Bozorboyev</b>ning shaxsiy boti\nqo'shimcha ma'lumot olish uchun <b>Menu</b> tugmasini bosing ⤵️", reply_markup=Menu_Keyboard)
-            print("tushib qoldi")
             await call.message.answer(result, disable_web_page_preview=True)
-            print("keldi")
+          
         else:
             result += "Iltimos, kanallarimizga obuna bo'ling, \nKeyin botni ishlatishingiz mumkin❗️"
             await call.answer(result, show_alert=True)
 
 
 
-# @dp.message_handler(CommandStart())
-# async def bot_start(message: types.Message):
-#     print("ketdi")
-#     photo_file = InputFile(path_or_bytesio="/home/acer/Downloads/Telegram Desktop/photo_2024-04-07_18-13-25.jpg")
-#     await message.reply_photo(photo_file,f"Salom {message.from_user.full_name} botimizga xush kelibsiz!\nBu <b>Otajon Bozorboyev</b>ning shaxsiy boti\nqo'shimcha ma'lumot olish uchun <b>Menu</b> tugmasini bosing ⤵️", reply_markup=Menu_Keyboard)
-    
+
 
     
